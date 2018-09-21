@@ -1,0 +1,832 @@
+import { createStore } from 'redux';
+
+// using cash const for the function createStore() that we use it onse with an arrow function exccept two argument 
+// state equal an object as default in side't many or one params like here count: 0
+// action without default and means the action i need to do for the params state type using dispatch() function
+// by using switch statment to shose more an value type for the action value
+
+// const store = createStore((state = { count: 0 }, action) => {
+//     // console.log(state);
+
+//     switch (action.type) {
+//         case 'INCREMENT':
+//         return {
+//             count: state.count + 1
+//         };
+
+//         case 'DECREMENT':
+//         return {
+//             count: state.count - 1
+//         };
+
+//         case 'RESET':
+//         return {
+//             count: 0
+//         }; 
+
+//         default:
+//         return state;
+//     }
+    
+// });
+
+
+// useing a function getState() to get the action dispatch
+
+// console.log(store.getState());
+
+
+//What Actions - Is nothing more than an object that gets sent to the store 
+
+
+// I'd like to increment the count using dispatch() function with the object of the state type value
+
+store.dispatch({
+    type: 'INCREMENT'
+});
+
+
+store.dispatch({
+    type: 'INCREMENT'
+});
+
+// I'd like to reset the count to zero using dispatch() function with the object of the state type value
+
+store.dispatch({
+    type: 'RESET'
+});
+
+// I'd like to decrement the count using dispatch() function with the object of the state type value
+
+store.dispatch({
+    type: 'DECREMENT'
+});
+
+// using the getState again to chack the value after using other action
+
+// console.log(store.getState());   
+
+
+--------------------------------------------------------------------------------------------
+
+
+import { createStore } from 'redux';
+
+
+// const store = createStore((state = { count: 0 }, action) => {
+
+//     switch (action.type) {
+//         case 'INCREMENT':
+//         return {
+//             count: state.count + 1
+//         };
+
+//         case 'DECREMENT':
+//         return {
+//             count: state.count - 1
+//         };
+
+//         case 'RESET':
+//         return {
+//             count: 0
+//         }; 
+
+//         default:
+//         return state;
+//     }
+    
+// });
+
+// The way how i watch all the action dispatch in one time
+
+// store.subscribe(() => {
+//     console.log(store.getState()); 
+// });
+
+// using cash const name for the function subscibe to use it to stop the action dispaching in any place i want
+
+const unsubscribe = store.subscribe(() => {
+    console.log(store.getState()); 
+});
+
+
+store.dispatch({
+    type: 'INCREMENT'
+});
+
+// stoping dispatch by calling name of cash function 
+
+unsubscribe();
+
+store.dispatch({
+    type: 'INCREMENT'
+});
+
+
+store.dispatch({
+    type: 'RESET'
+});
+
+
+store.dispatch({
+    type: 'DECREMENT'
+});
+ 
+
+
+--------------------------------------------------------------------------------------------
+
+import { createStore } from 'redux';
+
+// useing default value action
+
+const store = createStore((state = { count: 0 }, action) => {
+
+    switch (action.type) {
+        case 'INCREMENT':
+        const incrementBy = typeof action.incrementBy === 'number' ? action.incrementBy : 1; 
+        return {
+            count: state.count + incrementBy
+        };
+
+        case 'DECREMENT':
+        const decrementBy = typeof action.decrementBy === 'number' ? action.decrementBy : 1;
+        return {
+            count: state.count - decrementBy
+        };
+
+        case 'SET':
+        return {
+            count: action.count 
+        }; 
+
+        case 'RESET':
+        return {
+            count: 0
+        }; 
+
+        default:
+        return state;
+    }
+    
+});
+
+const unsubscribe = store.subscribe(() => {
+    console.log(store.getState()); 
+});
+
+
+store.dispatch({
+    type: 'INCREMENT',
+    incrementBy: 5
+});
+
+
+store.dispatch({
+    type: 'INCREMENT'
+});
+
+
+store.dispatch({
+    type: 'RESET'
+});
+
+store.dispatch({
+    type: 'DECREMENT'
+});
+
+store.dispatch({
+    type: 'DECREMENT',
+    decrementBy: 10
+});
+
+store.dispatch({
+    type: 'SET',
+    count: 101
+});
+
+
+
+-------------------------------------------------------------------------------
+
+
+                     ES6   Destructuring Objects and Arrays
+
+// console.log('destructuring');
+
+
+
+//
+// Object Destructuring
+//
+
+// const person = {
+//     name: 'Hamam',
+//     age: 34,
+//     work: 'webdeveloper',
+//     location:{
+//         city: 'Märsta',
+//         temp: 80
+//     }
+// }
+
+
+// // console.log(`${person.name} is ${person.age}.`);
+
+// // if (person.location.city && person.location.temp){
+// // console.log(`
+// // ${person.name} is ${person.age} live in ${person.location.city} and temperature is there ${person.location.temp}
+// // `);
+// // }
+
+// // const name = person.name;
+// // const age = person.age;
+// // const { name, age, location} = person;
+// // console.log(`${name} is ${age} and i live in ${location.city}.`);
+
+// const { name = 'Anonymous', age} = person;   // default for name if not exist
+// console.log(`${name} is ${age}.`);
+
+// // const { city, temp } = person.location;
+// // if (city && temp){
+// //     console.log(`It is ${temp}-F' in ${city}.`);
+// //     }
+
+// const { city, temp: temperature } = person.location;   
+// // changing the temp name using other name like short cut and never will eccept the old name efter that  
+// if (city && temperature){
+//     console.log(`It is ${temperature}-F' in ${city}.`);
+//     }
+
+
+// // we can use both of default and changing rename in same time      
+// const { work: job = 'Programmer'} = person;   
+// console.log(`Doing: ${job}.`);
+
+
+// const book = {
+//     title: 'Ego is the Enemy',
+//     author: 'Ryan Holiday',
+//     publisher: {
+//         // name: 'penguin'
+//     }
+// }
+
+// const {name: publisherName = 'Self-Published'} = book.publisher;
+
+// console.log(publisherName);
+
+
+//
+// Arrays Destructuring
+//
+
+// const address = ['Södergatan 47B', '19547 Märsta', 'Stockholm', 'Sweden'];
+
+// console.log(`You are in ${address[1]} ${address[3]}.`);
+
+
+
+// const [street, city, state, contry] = address;
+
+// const [, city, state] = address;      // scap the first item if i don't need to manchin it
+
+// console.log(`You are in ${city} ${contry}.`);
+
+// const [, , state] = address;
+// console.log(`You are in ${state}.`);
+
+
+// const address = ['Södergatan 47B', '19547 Märsta', 'Stockholm'];
+// const [, , , contry = 'Sverige'] = address;    // rename is not exist in arrays but default yes
+// console.log(`You are in ${contry}.`);
+
+
+// const address = ['Södergatan 47B', '19547 Märsta', 'Stockholm', 'Sweden'];
+// const [, , state = 'Sverige', contry] = address;    // rename is not exist in arrays but default yes
+// console.log(`You are in ${state}.`);
+
+
+const item = ['Coffee (hot)', 'kr2.00', 'kr2.50', 'kr2.75'];
+
+const [itemName = 'Drink', , mediumPrice, ] = item;
+
+console.log(`A medium ${itemName} costs ${mediumPrice}`);
+
+
+
+
+// just example to understand useing destructuring in arrow function 
+// const add = (data) => {
+//     return data.a + data.b;
+// }
+// const add = ( { a, b } ) => {
+//     return a + b;
+// }
+// console.log(add({a: 1, b: 12}));
+
+const add = ( { a, b }, c ) => {
+    return a + b + c;
+}
+console.log(add({a: 1, b: 12}, 100));
+
+// we can use a default value too 
+
+------------------------------------------------------------------------------------------
+
+
+
+
+import { createStore } from 'redux';
+
+// const incrementCount = () => {   
+//     return {
+//         type: 'INCREMENT'
+//     }
+// };
+// shortcut without using return
+const incrementCount = () => ({
+        type: 'INCREMENT'
+    });
+
+const store = createStore((state = { count: 0 }, action) => {
+    // console.log(state);
+
+    switch (action.type) {
+        case 'INCREMENT':
+        const incrementBy = typeof action.incrementBy === 'number' ? action.incrementBy : 1; 
+        return {
+            count: state.count + incrementBy
+        };
+
+        case 'DECREMENT':
+        const decrementBy = typeof action.decrementBy === 'number' ? action.decrementBy : 1;
+        return {
+            count: state.count - decrementBy
+        };
+
+        case 'SET':
+        return {
+            count: action.count 
+        }; 
+
+        case 'RESET':
+        return {
+            count: 0
+        }; 
+
+        default:
+        return state;
+    }
+    
+});
+
+const unsubscribe = store.subscribe(() => {
+    console.log(store.getState()); 
+});
+
+
+store.dispatch({
+    type: 'INCREMENT',
+    incrementBy: 5
+});
+
+
+// store.dispatch({
+//     type: 'INCREMENTT'   // using wrong word efter using aa function of 
+// });
+
+store.dispatch(incrementCount()); // using the function 
+
+
+store.dispatch({
+    type: 'RESET'
+});
+
+store.dispatch({
+    type: 'DECREMENT'
+});
+
+store.dispatch({
+    type: 'DECREMENT',
+    decrementBy: 10
+});
+
+store.dispatch({
+    type: 'SET',
+    count: 101
+});
+
+
+----------------------------------------------------------------------------------
+
+
+import { createStore } from 'redux';
+
+
+// const incrementCount = (payload = {}) => ({   // should i use default for payload action as empty object because if i call function without pasing an argument value will have an error 
+//         type: 'INCREMENT',
+//         incrementBy: typeof payload.incrementBy === 'number' ? payload.incrementBy : 1
+//     });
+
+    
+const incrementCount = ({ incrementBy = 1 } = {}) => ({   
+        type: 'INCREMENT',
+        incrementBy:  incrementBy
+    });    
+
+    
+
+const store = createStore((state = { count: 0 }, action) => {
+
+    switch (action.type) {
+        case 'INCREMENT': 
+        return {
+            count: state.count + action.incrementBy
+        };
+
+        case 'DECREMENT':
+        const decrementBy = typeof action.decrementBy === 'number' ? action.decrementBy : 1;
+        return {
+            count: state.count - decrementBy
+        };
+
+        case 'SET':
+        return {
+            count: action.count 
+        }; 
+
+        case 'RESET':
+        return {
+            count: 0
+        }; 
+
+        default:
+        return state;
+    }
+    
+});
+
+const unsubscribe = store.subscribe(() => {
+    console.log(store.getState()); 
+});
+
+
+store.dispatch(incrementCount({incrementBy: 5}));
+
+store.dispatch(incrementCount()); // using the function without any argument 
+
+
+store.dispatch({
+    type: 'RESET'
+});
+
+store.dispatch({
+    type: 'DECREMENT'
+});
+
+store.dispatch({
+    type: 'DECREMENT',
+    decrementBy: 10
+});
+
+store.dispatch({
+    type: 'SET',
+    count: 101
+});
+
+
+----------------------------------------------------------------------------------
+                                  
+                                  Organization
+
+import { createStore } from 'redux';
+
+const incrementCount = ({ incrementBy = 1 } = {}) => ({   
+    type: 'INCREMENT',
+    incrementBy   
+});    
+
+const decrementCount = ({decrementBy = 1} = {}) => ({
+    type: 'DECREMENT',
+    decrementBy
+});   
+
+const setCount = ({count}) => ({
+     type: 'SET',
+     count
+});
+
+const resetCount = () => ({
+    type: 'RESET'
+});
+
+const store = createStore((state = { count: 0 }, action) => {
+
+    switch (action.type) {
+        case 'INCREMENT': 
+        return {
+            count: state.count + action.incrementBy
+        };
+
+        case 'DECREMENT':
+        return {
+            count: state.count - action.decrementBy
+        };
+
+        case 'SET':
+        return {
+            count: action.count
+        }; 
+
+        case 'RESET':
+        return {
+            count: 0
+        }; 
+
+        default:
+        return state;
+    }
+    
+});
+
+const unsubscribe = store.subscribe(() => {
+    console.log(store.getState()); 
+});
+
+
+store.dispatch(incrementCount({incrementBy: 5}));
+
+store.dispatch(incrementCount()); 
+
+store.dispatch(resetCount());
+
+store.dispatch(decrementCount());
+
+store.dispatch(decrementCount({decrementBy: 10}));
+
+store.dispatch(setCount({ count: 101 }));
+
+-------------------------------------------------------------------------------------
+
+                              REDUX expensify-app
+
+
+import { createStore, combineReducers } from 'redux';
+import uuid from 'uuid';
+
+// ADD_EXPENSE
+const addExpense = (
+    { 
+        description = '',
+        note = '',
+        amount = 0,
+        createdAt = 0
+    } = {}
+) => ({
+    type: 'ADD_EXPENSE',
+    expense: {
+        id: uuid(),
+        description,
+        note,
+        amount,
+        createdAt
+    }
+});
+
+// REMOVE_EXPENSE
+const removeExpense = ({ id } = {}) => ({
+    type: 'REMOVE_EXPENSE',
+    id
+});
+
+// EDIT_EXPENSE
+const editExpense = (id, updates) => ({
+    type: 'EDIT_EXPENSE',
+    id,
+    updates
+});
+
+// SET_TEXT_FILTER
+const setTextFilter = (text = '') => ({
+    type: 'SET_TEXT_FILTER',
+    text
+});
+
+// SORT_BY_DATE
+const sortByDate = () => ({
+    type: 'SORT_BY_DATE'
+});
+
+// SORT_BY_AMOUNT
+const sortByAmount = () => ({
+    type: 'SORT_BY_AMOUNT'
+});
+
+// SET_START_DATE
+const setStartDate = (startDate) => ({
+    type: 'SET_START_DATE',
+    startDate
+});
+
+// SET_END_DATE
+const setEndDate = (endDate) => ({
+    type: 'SET_END_DATE',
+    endDate
+});
+
+
+// Expenses Reducer
+const expensesReducerDefaultState = [];
+
+const expensesReducer = (state = expensesReducerDefaultState, action) => {
+     switch (action.type) {
+         case 'ADD_EXPENSE':
+            // return state.concat(action.expense);
+            return [
+                ...state,
+                action.expense
+            ];
+         case 'REMOVE_EXPENSE':
+            return state.filter(({id}) => id !== action.id);
+
+         case 'EDIT_EXPENSE':   
+            return state.map((expense) => {
+                 if (expense.id === action.id) {
+                     return {
+                        ...expense,
+                        ...action.updates
+                     };
+                 } else {
+                     return expense;
+                 };
+            });   
+         default:
+                 return state;
+     };
+};
+
+// Filters Reducers
+const filterReducerDefaultState = {
+    text: '',
+    sortBy: 'date',
+    startDate: undefined,
+    endDate: undefined
+};
+const filterReducer = (state = filterReducerDefaultState, action) => {
+      switch (action.type) {
+        case 'SET_TEXT_FILTER':
+          return {
+              ...state,
+              text: action.text
+          };
+
+        case 'SORT_BY_AMOUNT':
+          return {
+              ...state,
+              sortBy: 'amount'
+          };
+        case 'SORT_BY_DATE':
+          return {
+              ...state,
+              sortBy: 'date'
+          };
+
+        case 'SET_START_DATE':
+          return {
+              ...state,
+              startDate: action.startDate
+          };
+
+        case 'SET_END_DATE':
+          return {
+              ...state,
+              endDate: action.endDate
+          }; 
+
+          default:
+              return state;
+      }
+};
+// timestamps (millisecond)
+// January 1st 1970 (unix epoch)
+// 33400, 10, -203
+
+
+// Get visible expenses
+
+// const getVisibleExpenses = (expenses, filters) => {
+//     return expenses;
+// };
+
+const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
+    return expenses.filter((expense) => {
+         const startDateMatch = typeof startDate !== 'number' || expense.createdAt >= startDate;
+         const endDateMatch = typeof endDate !== 'number' || expense.createdAt <= endDate;
+         const textMatch = expense.description.toLowerCase().includes(text.toLowerCase());
+      
+         // figure out if expenses.description has the text variable string inside of it.
+         // includes
+         // convert both strings to lower case 
+         
+
+         return startDateMatch && endDateMatch && textMatch;
+    }).sort((a, b) => {
+        if(sortBy === 'date') {
+             return a.createdAt < b.createdAt ? 1 : -1;
+        } else if(sortBy === 'amount') {
+            return a.amount < b.amount ? 1 : -1;
+       }
+    });
+};
+
+// Store creation
+
+// const store = createStore(expensesReducer);
+const store = createStore(
+    combineReducers({
+        expenses: expensesReducer,
+        filters: filterReducer
+    })
+);
+0
+store.subscribe(() => {
+    const state = store.getState();
+    const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
+    // console.log(store.getState());
+    console.log(visibleExpenses);
+});
+
+const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100, createdAt: -21000 }));
+const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 300, createdAt: -1000 }));
+
+// store.dispatch(removeExpense({ id: expenseOne.expense.id }));
+
+// store.dispatch(editExpense(expenseTwo.expense.id, {amount: 500}));
+
+// store.dispatch(setTextFilter('ffe'));
+// store.dispatch(setTextFilter('rent'));
+// store.dispatch(setTextFilter());
+
+store.dispatch(sortByAmount());
+// store.dispatch(sortByDate());
+
+// store.dispatch(setStartDate(0));
+// store.dispatch(setStartDate());
+// store.dispatch(setEndDate(1250));
+
+// console.log(expenseOne);
+
+const demoState = {
+    expenses: [{
+        id: '123123H',
+        description: 'January Rent',
+        note: 'This was the final payment for that address',
+        amount: 91800,
+        createdAt: 0
+    }],
+    filters: {
+        text: 'rent',
+        sortBy: 'amount', // date or amount
+        startDate: undefined,
+        endDate: undefined
+    }
+}
+
+
+// Ex: how we use ...array with object for that we install babel object spread operator and include the plugen
+
+// const user = {
+//     name:'Hamam',
+//     age: 34
+// }
+
+// console.log({
+//     ...user,
+//     location: 'Märsta'
+// });
+
+// console.log({
+//     ...user,
+//     location: 'Märsta',
+//     age: 35
+// });
+
+// console.log({
+//     age: 35,
+//     ...user,
+//     location: 'Märsta'
+// });
+
+------------------------------------------------------------------------------------------------------
+
+yarn add enzyme@3.0.0 enzyme-adapter-react-16@1.0.0 raf@3.3.2 enzyme-to-json@3.0.1
+
+
+
+
+
+
+
+
+
